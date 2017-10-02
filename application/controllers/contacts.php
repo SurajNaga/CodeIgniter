@@ -15,22 +15,31 @@ class Contacts extends CI_Controller {
         $this->load->model('contact');
     }
 
-	public function list()
+	public function list($offset=0)
 	{
+		//die($offset);
 		$data = array();
 
 		if($this->input->post()) {
 			$data['search_name'] = $this->input->post('search_name');
 		}
 
-		$data['returnType'] = 'count';
+		// $data['returnType'] = 'count';
+		// $data['start'] = 0;
+		// $data['limit'] = 10;
 		$config['base_url'] = $this->config->base_url().'contacts/list';
-		$config['total_rows'] = $this->contact->getRows($data);
-		$config['per_page'] = 5;
+	    $config['per_page'] = 5;
+	    $num_rows = $this->contact->getTotalRows();
+
+		$config['total_rows'] = $num_rows;
+	    $config['num_links'] = $num_rows;
+	    $config['use_page_numbers'] = TRUE;
+
+		//$config['per_page'] = 9;
 
 		$this->pagination->initialize($config);
 
-		$data['contact_data'] = $this->contact->getRows();
+		$data['contact_data'] = $this->contact->getRows($config['per_page'],$offset);
 		$this->load->view('contacts/list', $data);
 	}
 
