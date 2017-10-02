@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category   Alm
+ * @package    Alm_Orderprocess
+ * @author     ModuleCreator
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <Alm_Orderprocess>
+            <version>0.1.0</version>
+        </Alm_Orderprocess>
+    </modules>
+    <frontend>
+        <routers>
+            <orderprocess>
+                <use>standard</use>
+                <args>
+                    <module>Alm_Orderprocess</module>
+                    <frontName>orderprocess</frontName>
+                </args>
+            </orderprocess>
+        </routers>
+        <layout>
+            <updates>
+                <orderprocess>
+                    <file>orderprocess.xml</file>
+                </orderprocess>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<orderprocess>
+				<use>admin</use>
+				<args>
+					<module>Alm_Orderprocess</module>
+					<frontName>orderprocess</frontName>
+				</args>
+			</orderprocess>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<orderprocess module="orderprocess">
+				<title>Orderprocess</title>
+				<sort_order>71</sort_order>               
+				<children>
+					<items module="orderprocess">
+						<title>Manage Items</title>
+						<sort_order>0</sort_order>
+						<action>orderprocess/adminhtml_orderprocess</action>
+					</items>
+				</children>
+			</orderprocess>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Alm_Orderprocess>
+							<title>Orderprocess Module</title>
+							<sort_order>10</sort_order>
+						</Alm_Orderprocess>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<orderprocess>
+					<file>orderprocess.xml</file>
+				</orderprocess>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>			
+            <orderprocess>
+                <class>Alm_Orderprocess_Model</class>
+                <resourceModel>orderprocess_mysql4</resourceModel>
+            </orderprocess>
+            <orderprocess_mysql4>
+                <class>Alm_Orderprocess_Model_Mysql4</class>
+                <entities>
+                    <orderprocess>
+                        <table>orderprocess</table>
+                    </orderprocess>
+                </entities>
+            </orderprocess_mysql4>
+        </models>
+        <resources>
+            <orderprocess_setup>
+                <setup>
+                    <module>Alm_Orderprocess</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </orderprocess_setup>
+            <orderprocess_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </orderprocess_write>
+            <orderprocess_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </orderprocess_read>
+        </resources>
+        <blocks>
+            <orderprocess>
+                <class>Alm_Orderprocess_Block</class>
+            </orderprocess>
+        </blocks>
+        <helpers>
+            <orderprocess>
+                <class>Alm_Orderprocess_Helper</class>
+            </orderprocess>
+        </helpers>
+    </global>
+</config>

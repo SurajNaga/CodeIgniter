@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Alm_Checkout>
+			<version>1.0.0</version>
+		</Alm_Checkout>
+	</modules>
+	 <frontend>
+        <routers>        	
+            <checkout>              
+                <args>                    
+                    <modules>
+                        <Alm_Checkout before="Mage_Checkout">Alm_Checkout</Alm_Checkout>
+                    </modules>
+                </args>
+            </checkout>          
+        </routers> 
+         <layout>
+            <updates>
+                <alm_checkout>
+                    <file>alm.xml</file>
+                </alm_checkout>
+            </updates>
+        </layout>      
+    </frontend>        
+    <global>
+    	<blocks>
+              <checkout>
+                  <rewrite>
+                      <onepage_abstract>Alm_Checkout_Block_Onepage_Abstract</onepage_abstract>
+                      <onepage_shipping_method>Alm_Checkout_Block_Onepage_Shipping_Method</onepage_shipping_method>
+                  </rewrite>
+              </checkout>
+       </blocks>
+    	<models> 
+    		<sales>
+    			<rewrite>
+    				<service_quote>Alm_Checkout_Model_Service_Quote</service_quote>
+    			</rewrite>
+    		</sales>   		
+    		<alm_checkout>
+    			 <class>Alm_Checkout_Model</class>
+    			  <resourceModel>checkout_resource</resourceModel>
+    		</alm_checkout>
+    		<checkout_resource>
+    			<!-- <class>Alm_Checkout_Model_Resource</class> -->
+                <entities>
+                    <checkout>
+                        <table>alm_chekout</table>
+                    </checkout>
+                </entities>
+    		</checkout_resource>
+    	</models>
+    	<events>
+    	<checkout_cart_add_product_complete>
+    		<observers>
+    			<alm_checkout_observer>
+    				<class>alm_checkout/observer</class>
+                        <method>updateShippingFlag</method>
+    			</alm_checkout_observer>
+    		</observers>
+    	</checkout_cart_add_product_complete>
+    		<checkout_cart_add_product_complete>
+    		<observers>
+    			<alm_checkout_observer_2>
+    				<class>alm_checkout/observer</class>
+                        <method>getCurrentQuoteId</method>
+    			</alm_checkout_observer_2>
+    		</observers>
+    	</checkout_cart_add_product_complete>
+    	
+    	
+    		
+    	
+    
+    	</events>
+    	<resources>
+            <checkout_setup>
+                <setup>
+                    <module>Alm_Checkout</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </checkout_setup>
+            <checkout_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </checkout_write>
+            <checkout_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </checkout_read>
+        </resources>
+         <template>
+        <email>
+            <new_order_shipping1>
+                <label>New Order Shipping</label>
+                <file>new_order_shipping.html</file>
+                <type>html</type>
+            </new_order_shipping1>
+            <new_order_shipping_processsed >
+                <label>New Order Shipping Processed</label>
+                <file>new_order_shipping_processsed.html</file>
+                <type>html</type>
+            </new_order_shipping_processsed>
+        </email>
+    </template>
+    </global>
+</config>
